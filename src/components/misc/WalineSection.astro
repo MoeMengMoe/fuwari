@@ -1,0 +1,21 @@
+---
+import { Icon } from "astro-icon/components";
+import { commentsConfig } from "../../config";
+import WalineComments from "./WalineComments.svelte";
+
+const serverURL = commentsConfig.serverURL;
+const needsConfig = !serverURL;
+---
+<div class="card-base p-4 md:p-6 w-full onload-animation" data-pagefind-ignore="true">
+    <div class="flex items-center gap-2 mb-3 text-black/75 dark:text-white/75 transition">
+        <Icon name="material-symbols:forum-outline" class="text-2xl text-[var(--primary)]" />
+        <span class="font-bold">评论</span>
+    </div>
+    {needsConfig ? (
+            <div class="text-sm text-black/60 dark:text-white/60 leading-relaxed">
+                请在 <code class="px-1 py-0.5 rounded bg-[var(--btn-regular-bg)] text-[var(--btn-content)]">src/config.ts</code> 中填写 <strong>commentsConfig.serverURL</strong> 以启用 Waline 评论系统。
+            </div>
+    ) : (
+            <WalineComments serverURL={serverURL} client:load />
+    )}
+</div>
