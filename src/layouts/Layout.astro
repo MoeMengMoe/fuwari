@@ -1,7 +1,5 @@
 ---
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import "../styles/fonts.css";
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
 import { profileConfig, siteConfig } from "@/config";
@@ -137,17 +135,58 @@ const bannerOffset =
 			offset = offset - offset % 4;
 			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
 		</script>
-		<style define:vars={{
-			configHue,
-			'page-width': `${PAGE_WIDTH}rem`,
-		}}></style>  <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
+                <style define:vars={{
+                        configHue,
+                        'page-width': `${PAGE_WIDTH}rem`,
+                }}></style>  <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
 
 
-		<slot name="head"></slot>
+                <slot name="head"></slot>
 
-		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
+                <script is:inline define:vars={{ baseTitle: pageTitle }}>
+                        (() => {
+                                let normalTitle = baseTitle;
+                                let welcomeTimer;
 
-	</head>
+                                const restoreTitle = () => {
+                                        document.title = normalTitle;
+                                };
+
+                                const handleFocus = () => {
+                                        if (!normalTitle) {
+                                                normalTitle = document.title;
+                                        }
+                                        if (welcomeTimer) {
+                                                clearTimeout(welcomeTimer);
+                                        }
+                                        document.title = '(^^) Welcome Back!';
+                                        welcomeTimer = window.setTimeout(restoreTitle, 3000);
+                                };
+
+                                const handleBlur = () => {
+                                        if (document.title !== normalTitle && document.title !== '(><) Come Back!') {
+                                                normalTitle = document.title;
+                                        }
+                                        if (welcomeTimer) {
+                                                clearTimeout(welcomeTimer);
+                                        }
+                                        document.title = '(><) Come Back!';
+                                };
+
+                                const syncTitle = () => {
+                                        normalTitle = document.title;
+                                };
+
+                                syncTitle();
+                                window.addEventListener('focus', handleFocus);
+                                window.addEventListener('blur', handleBlur);
+                                document.addEventListener('astro:page-load', syncTitle);
+                        })();
+                </script>
+
+                <link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
+
+        </head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
 		  data-overlayscrollbars-initialize
 	>
@@ -216,8 +255,10 @@ import { siteConfig } from '../config';
 // (async function() {
 // 	try {
 // 		await Promise.all([
-// 			document.fonts.load("400 1em Roboto"),
-// 			document.fonts.load("700 1em Roboto"),
+// 			document.fonts.load("400 1em 'LXGW WenKai'"),
+// 			document.fonts.load("700 1em 'LXGW WenKai'"),
+// 			document.fonts.load("400 1em 'JetBrains Mono'"),
+// 			document.fonts.load("700 1em 'JetBrains Mono'"),
 // 		]);
 // 		document.body.classList.remove("hidden");
 // 	} catch (error) {
