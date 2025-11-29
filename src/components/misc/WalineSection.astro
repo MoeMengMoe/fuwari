@@ -13,7 +13,8 @@ const needsConfig = !serverURL;
     </div>
     {needsConfig ? (
             <div class="text-sm text-black/60 dark:text-white/60 leading-relaxed">
-                请在 <code class="px-1 py-0.5 rounded bg-[var(--btn-regular-bg)] text-[var(--btn-content)]">src/config.ts</code> 中填写 <strong>commentsConfig.serverURL</strong> 以启用 Waline 评论系统。
+                请在 <code class="px-1 py-0.5 rounded bg-[var(--btn-regular-bg)] text-[var(--btn-content)]">src/config.ts</code> 中填写 <strong>commentsConfig.serverURL</strong>
+                或在环境变量中设置 <code class="px-1 py-0.5 rounded bg-[var(--btn-regular-bg)] text-[var(--btn-content)]">PUBLIC_WALINE_SERVER</code> 以启用 Waline 评论系统。
             </div>
     ) : (
             <WalineComments serverURL={serverURL} client:load />
