@@ -77,7 +77,7 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 };
 
 export const commentsConfig: CommentsConfig = {
-        // Fill in your Waline server URL to enable comments.
-        // You can also set the PUBLIC_WALINE_SERVER environment variable to avoid hardcoding secrets.
+        // Fill in your Waline server URL to enable comments, e.g. "https://comments.example.com".
+        // You can also set the PUBLIC_WALINE_SERVER environment variable instead of hardcoding it here.
         serverURL: import.meta.env.PUBLIC_WALINE_SERVER ?? "",
 };
