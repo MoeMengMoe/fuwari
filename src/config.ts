@@ -1,9 +1,10 @@
 import type {
-	ExpressiveCodeConfig,
-	LicenseConfig,
-	NavBarConfig,
-	ProfileConfig,
-	SiteConfig,
+        CommentsConfig,
+        ExpressiveCodeConfig,
+        LicenseConfig,
+        NavBarConfig,
+        ProfileConfig,
+        SiteConfig,
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 
@@ -75,7 +76,8 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	theme: "github-dark",
 };
 
-export const commentsConfig = {
-	// Fill in your Waline server URL to enable comments
-	serverURL: "",
+export const commentsConfig: CommentsConfig = {
+        // Fill in your Waline server URL to enable comments, e.g. "https://comments.example.com".
+        // You can also set the PUBLIC_WALINE_SERVER environment variable instead of hardcoding it here.
+        serverURL: import.meta.env.PUBLIC_WALINE_SERVER ?? "",
 };
